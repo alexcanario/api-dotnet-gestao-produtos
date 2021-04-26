@@ -1,4 +1,6 @@
+using DevIO.Api.Config;
 using DevIO.Data.Context;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +14,7 @@ namespace DevIO.Api {
         private readonly string _connString;
         private readonly string _defaultConnectionString;
         public Startup(IConfiguration configuration) {
-            _defaultConnectionString = @"Server=. Database=MinhaApicompletaDbç User Id=sa; Password=Ca151867; MultipleActiveResultSets=True;";
+            _defaultConnectionString = @"Server=.; Database=MinhaApicompletaDb; User Id=sa; Password=Ca151867; MultipleActiveResultSets=True;";
             Configuration = configuration;
             _connString = string.IsNullOrEmpty(Configuration.GetConnectionString("DefaultConnectionString")) ? _defaultConnectionString : Configuration.GetConnectionString("DefaultConnectionString");
         }
@@ -21,13 +23,14 @@ namespace DevIO.Api {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            services.AddAutoMapper(typeof(Startup));
+            services.ResolveDependencies();
             services.AddDbContext<MeuDbContext>(options => {
                 options.UseSqlServer(_connString);
             });
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
+            services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DevIO.Api", Version = "v1" });
             });
         }

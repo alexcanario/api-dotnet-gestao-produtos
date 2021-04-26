@@ -1,9 +1,12 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
+
 using DevIO.Api.ViewModels;
 using DevIO.Business.Intefaces;
+
 using Microsoft.AspNetCore.Mvc;
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DevIO.Api.Controllers {
     public class FornecedoresController : MainController {
@@ -15,10 +18,11 @@ namespace DevIO.Api.Controllers {
             _mapper = mapper;
         }
 
+        [Route("api/[controller]")]
         public async Task<ActionResult<IEnumerable<FornecedorViewModel>>> ObterTodos() {
-            
+            var fornecedores = _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos());            
 
-            return Ok();
+            return Ok(fornecedores);
         }
     }
 }
