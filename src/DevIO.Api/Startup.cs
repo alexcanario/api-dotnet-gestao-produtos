@@ -1,31 +1,29 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DevIO.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace DevIO.Api
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
+namespace DevIO.Api {
+    public class Startup {
+        private readonly string _connString;
+        private readonly string _defaultConnectionString;
+        public Startup(IConfiguration configuration) {
+            _defaultConnectionString = @"Server=. Database=MinhaApicompletaDbç User Id=sa; Password=Ca151867; MultipleActiveResultSets=True;";
             Configuration = configuration;
+            _connString = string.IsNullOrEmpty(Configuration.GetConnectionString("DefaultConnectionString")) ? _defaultConnectionString : Configuration.GetConnectionString("DefaultConnectionString");
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
+        public void ConfigureServices(IServiceCollection services) {
+            services.AddDbContext<MeuDbContext>(options => {
+                options.UseSqlServer(_connString);
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
