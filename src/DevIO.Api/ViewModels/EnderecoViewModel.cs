@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DevIO.Api.ViewModels
@@ -36,4 +36,4 @@ namespace DevIO.Api.ViewModels
 
         public Guid FornecedorId { get; set; }
     }
-}
+}    
