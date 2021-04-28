@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DevIO.Api.Controllers {
+    [Route("api/[controller]")]
     public class FornecedoresController : MainController {
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IFornecedorService _fornecedorService;
@@ -24,7 +25,7 @@ namespace DevIO.Api.Controllers {
             _mapper = mapper;
         }
 
-        [Route("api/[controller]")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<FornecedorViewModel>>> ObterTodos() {
             var fornecedores = _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos());            
 
@@ -42,13 +43,12 @@ namespace DevIO.Api.Controllers {
         [HttpPost]
         public async Task<ActionResult<FornecedorViewModel>> Adicionar(FornecedorViewModel fornecedorViewModel) {
             if(!ModelState.IsValid) return BadRequest();
-
-            var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            var result = await _fornecedorService.Adicionar(fornecedor);
+            
+            var result = await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
             if(!result) return BadRequest();
 
-            return Ok(fornecedor);
+            return Ok(fornecedorViewModel);
         }
 
         [HttpPut("{id:guid}")]
@@ -57,12 +57,11 @@ namespace DevIO.Api.Controllers {
 
             if(!ModelState.IsValid) return BadRequest();
 
-            var fornecedor = _mapper.Map<Fornecedor>(fornecedorView);
-            var result = await _fornecedorService.Atualizar(fornecedor);
+            var result = await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorView));
 
             if(!result) return BadRequest();
 
-            return Ok(fornecedor);
+            return Ok(fornecedorView);
         }
 
         [HttpDelete("{id:guid}")]
