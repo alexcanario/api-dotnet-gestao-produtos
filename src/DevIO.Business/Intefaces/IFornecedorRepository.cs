@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DevIO.Business.Models;
 
@@ -8,5 +9,6 @@ namespace DevIO.Business.Intefaces
     {
         Task<Fornecedor> ObterFornecedorEndereco(Guid id);
         Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id);
+        Task<IEnumerable<Fornecedor>> ObterTodosComEndereco();
     }
 }

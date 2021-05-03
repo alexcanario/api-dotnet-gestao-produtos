@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DevIO.Business.Intefaces;
 using DevIO.Business.Models;
@@ -24,6 +26,12 @@ namespace DevIO.Data.Repository
                 .Include(c => c.Produtos)
                 .Include(c => c.Endereco)
                 .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<IEnumerable<Fornecedor>> ObterTodosComEndereco() {
+            var todos = await (from fs in Db.Fornecedores.Include(f => f.Endereco) select fs).ToListAsync();
+
+            return todos;
         }
     }
 }

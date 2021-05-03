@@ -27,7 +27,7 @@ namespace DevIO.Api.Controllers {
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FornecedorViewModel>>> ObterTodos() {
-            var fornecedores = _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos());            
+            var fornecedores = _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodos());
 
             return Ok(fornecedores);
         }
@@ -82,6 +82,12 @@ namespace DevIO.Api.Controllers {
 
         public async Task<FornecedorViewModel> ObterFornecedorEndereco(Guid id) {
             return _mapper.Map<FornecedorViewModel>(await _fornecedorRepository.ObterFornecedorEndereco(id));
+        }
+
+        public async Task<IEnumerable<FornecedorViewModel>> ObterTodosFornecedoresComEndereco() {
+            var todos = _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepository.ObterTodosComEndereco());
+
+            return todos;
         }
      }
 }

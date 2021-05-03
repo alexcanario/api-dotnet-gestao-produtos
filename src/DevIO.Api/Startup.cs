@@ -14,9 +14,9 @@ namespace DevIO.Api {
         private readonly string _connString;
         private readonly string _defaultConnectionString;
         public Startup(IConfiguration configuration) {
-            _defaultConnectionString = @"Server=.; Database=MinhaApicompletaDb; User Id=sa; Password=Ca151867!; MultipleActiveResultSets=True;";
+            _defaultConnectionString = @"Server=.; Database=MinhaApicompletaDb; User Id=sa; Password=Ca151867; MultipleActiveResultSets=True;";
             Configuration = configuration;
-            _connString = string.IsNullOrEmpty(Configuration.GetConnectionString("DefaultConnectionString")) ? _defaultConnectionString : Configuration.GetConnectionString("DefaultConnectionString");
+            _connString = string.IsNullOrEmpty(Configuration.GetConnectionString("DefaultWinConnectionString")) ? _defaultConnectionString : Configuration.GetConnectionString("DefaultWinConnectionString");
         }
 
         public IConfiguration Configuration { get; }
