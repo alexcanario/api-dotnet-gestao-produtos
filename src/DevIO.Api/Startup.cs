@@ -3,6 +3,7 @@ using DevIO.Data.Context;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,15 @@ namespace DevIO.Api {
             });
 
             services.AddControllers();
+
+            
+            //Alex Canario - 04/05/2022
+            //Aula 5.8 - Desabilitar validação automatica do ModelState
+            //Passo 1
+            services.Configure<ApiBehaviorOptions>(options => {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DevIO.Api", Version = "v1" });
             });
