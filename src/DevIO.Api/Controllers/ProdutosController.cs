@@ -69,16 +69,12 @@ namespace DevIO.Api.Controllers {
         private bool UploadArquivo(string arquivo, string imgNome) {
             
             if (string.IsNullOrEmpty(arquivo)) {
-                //ModelState.AddModelError(string.Empty, "Forneça uma imagem para este produto!");
-                // Ou assim
                 NotifyError("Forneça uma imagem para este produto!");
                 return false;
             }
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgNome);
             if (System.IO.File.Exists(filePath)) {
-                ModelState.AddModelError(string.Empty, "Já existe um arquivo com este nome!");
-                //Ou
                 NotifyError("Já existe um arquivo com este nome!");
                 return false;
             }
