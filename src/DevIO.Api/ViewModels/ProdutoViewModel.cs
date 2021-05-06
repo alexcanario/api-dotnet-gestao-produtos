@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DevIO.Api.ViewModels
 {
-    public class ProdutoViewModel
-    {
+    public class ProdutoViewModel {
+        private string _imagem = string.Empty;
         [Key]
         public Guid Id { get; set; }
 
@@ -23,7 +23,10 @@ namespace DevIO.Api.ViewModels
 
         public string ImagemUpload { get; set; }
 
-        public string Imagem { get; set; }
+        public string Imagem { 
+            get => _imagem;
+            set => _imagem = $"{Guid.NewGuid()}_{value}";
+        }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public decimal Valor { get; set; }
@@ -35,5 +38,6 @@ namespace DevIO.Api.ViewModels
 
         [ScaffoldColumn(false)]
         public string NomeFornecedor { get; set; }
+
     }
 }
