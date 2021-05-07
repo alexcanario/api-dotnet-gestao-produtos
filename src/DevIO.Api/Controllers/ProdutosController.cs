@@ -1,16 +1,15 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 
 using DevIO.Api.ViewModels;
 using DevIO.Business.Intefaces;
+using DevIO.Business.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using DevIO.Business.Models;
-using Microsoft.Data.Sql;
 
 namespace DevIO.Api.Controllers {
     [Route("api/[controller]")]
@@ -73,7 +72,7 @@ namespace DevIO.Api.Controllers {
                 return false;
             }
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgNome);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/app/demo-webapi/src/assets", imgNome);
             if (System.IO.File.Exists(filePath)) {
                 NotifyError("Já existe um arquivo com este nome!");
                 return false;

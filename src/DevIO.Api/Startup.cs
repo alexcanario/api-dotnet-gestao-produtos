@@ -40,6 +40,14 @@ namespace DevIO.Api {
                 options.SuppressModelStateInvalidFilter = true;
             });
 
+            services.AddCors(options => {
+                options.AddPolicy("Development", builder => 
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
+
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DevIO.Api", Version = "v1" });
             });
@@ -65,6 +73,8 @@ namespace DevIO.Api {
             {
                 endpoints.MapControllers();
             });
+
+            app.UseCors("Development");
         }
     }
 }
